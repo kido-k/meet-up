@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'HelloWorld',
+  export default {
+    name: 'HelloWorld',
 
-  data: () => ({
-    title: 'Meet Up' as string,
-  }),
-}
+    data: () => ({
+      title: 'Meet Up' as string,
+    }),
+  }
 </script>
