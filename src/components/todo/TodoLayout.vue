@@ -1,32 +1,64 @@
 <template>
   <h1>ToDo List</h1>
   <v-layout class="todo-layout__controller">
-    <v-btn color="primary" @click="addDialog = true">
+    <v-btn color="primary" @click="openAddDialog">
       Add Todo
       <v-icon>mdi-plus</v-icon>
     </v-btn>
   </v-layout>
-  <todo-list />
-  <v-dialog v-if="addDialog" v-model="addDialog">
-    <todo-add @close="addDialog = false" />
+  <todo-list @edit-todo="openEditDialog" />
+  <v-dialog v-if="dialog" v-model="dialog">
+    <todo-dialog :todo="editTodoItem" @close="closeDialog" />
   </v-dialog>
 </template>
 
 <script lang="ts">
   import TodoList from '@/components/todo/TodoList.vue'
-  import TodoAdd from '@/components/todo/TodoAdd.vue'
+  import TodoDialog from '@/components/todo/TodoDialog.vue'
+
+  interface ToDo {
+    id: number | null
+    title: string
+    content: string
+  }
 
   export default {
     name: 'TodoLayout',
     components: {
       TodoList,
-      TodoAdd,
+      TodoDialog,
     },
     data: () => ({
-      addDialog: false as boolean,
+      dialog: false as boolean,
+      editTodoItem: {
+        id: null,
+        title: '',
+        content: '',
+      } as ToDo,
     }),
     computed: {},
-    methods: {},
+    methods: {
+      openAddDialog(): void {
+        this.editTodoItem = {
+          id: null,
+          title: '',
+          content: '',
+        }
+        this.dialog = true
+      },
+      openEditDialog(editItem): void {
+        this.editTodoItem = editItem
+        this.dialog = true
+      },
+      closeDialog(): void {
+        this.editTodoItem = {
+          id: null,
+          title: '',
+          content: '',
+        }
+        this.dialog = false
+      },
+    },
   }
 </script>
 

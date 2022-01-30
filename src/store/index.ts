@@ -22,8 +22,9 @@ export const store = createStore<State>({
       if (state.todoList.length > 0) max = state.todoList.slice(-1)[0].id
       state.todoList.push({ id: max + 1, title: title, content })
     },
-    changeTodo(state, { id, title, content }) {
-      const todo = state.todoList.find((todo) => todo === id) as ToDo
+    editTodo(state, { id, title, content }) {
+      const todo = state.todoList.find((todo) => todo.id === id) as ToDo
+      if (!todo) return
       todo.title = title || ''
       todo.content = content || ''
     },

@@ -6,12 +6,22 @@
           <th v-for="(header, index) in headers" :key="index" class="text-left">
             {{ header }}
           </th>
+          <th style="width: 24px"><!-- delete button --></th>
         </tr>
       </thead>
       <tbody v-if="items.length > 0">
         <tr v-for="item in items" :key="item.id">
-          <td v-for="(header, index) in headers" :key="index">
+          <td
+            v-for="(header, index) in headers"
+            :key="index"
+            @click="editTodo(item)"
+          >
             {{ item[header] }}
+          </td>
+          <td>
+            <v-btn icon flat @click.stop="deleteTodo(item)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
           </td>
         </tr>
       </tbody>
@@ -25,6 +35,7 @@
 <script lang="ts">
   export default {
     name: 'TodoList',
+    emits: ['edit-todo'],
     computed: {
       headers() {
         return this.$store.state.todoHeader
@@ -33,7 +44,16 @@
         return this.$store.state.todoList
       },
     },
-    methods: {},
+    methods: {
+      editTodo(item) {
+        this.$emit('edit-todo', item)
+      },
+      deleteTodo(item): void {
+        this.$store.commit('deleteTodo', {
+          id: item.id,
+        })
+      },
+    },
   }
 </script>
 
