@@ -40,7 +40,7 @@
   .register-layout {
     height: 480px;
     max-width: 960px;
-    margin: 60px 0 0 0;
+    margin: 60px auto 0 auto;
     &__title {
       text-align: center;
     }
